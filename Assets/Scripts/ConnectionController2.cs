@@ -3,28 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConnectionController2 : MonoBehaviour, IConnectionStatusProvider
+public class ConnectionController2 : AbstractConnectionController
 {
-    public enum Status
-    {
-        standby,
-        connection
-    }
-
-    public LayerMask connectors;
-    public Status status;
-
-    public event Action<GameObject> onStartConnection;
-    public event Action<GameObject> onCompleteConnection;
-
-    Camera m_camera;
-
-    private void Awake()
-    {
-        m_camera = Camera.main;
-    }
-
-    private void Update()
+    protected override void Update()
     {
         if (status == Status.standby)
         {
@@ -40,25 +21,5 @@ public class ConnectionController2 : MonoBehaviour, IConnectionStatusProvider
             if (Input.GetMouseButtonUp(0))
                 CompleteConnection(CheckConnector());
         }
-    }
-
-    GameObject CheckConnector()
-    {
-        RaycastHit hit;
-        Ray mouseScreenRay = m_camera.ScreenPointToRay(Input.mousePosition);
-        bool isHit = Physics.Raycast(mouseScreenRay, out hit, Mathf.Infinity, connectors);
-        return isHit ? hit.transform.gameObject : null;
-    }
-
-    void StartConnection(GameObject obj)
-    {
-        status = Status.connection;
-        onStartConnection?.Invoke(obj);
-    }
-
-    void CompleteConnection(GameObject obj)
-    {
-        status = Status.standby;
-        onCompleteConnection?.Invoke(obj);
     }
 }

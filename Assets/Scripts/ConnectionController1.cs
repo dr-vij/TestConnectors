@@ -3,29 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConnectionController1 : MonoBehaviour, IConnectionStatusProvider
+public class ConnectionController1 : AbstractConnectionController
 {
-    public enum Status
+    AbstractConnectionController[] m_controllers;
+
+    protected override void Awake()
     {
-        standby,
-        connection
+        base.Awake();
+        m_controllers = GetComponents<AbstractConnectionController>();
     }
 
-    public LayerMask connectors;
-    public Status status;
-
-    public event Action<GameObject> onStartConnection;
-    public event Action<GameObject> onCompleteConnection;
-
-    Camera m_camera;
-    GameObject m_selected;
-
-    private void Awake()
-    {
-        m_camera = Camera.main;
-    }
-
-    private void Update()
+    protected override void Update()
     {
         if (status == Status.standby)
         {
@@ -41,23 +29,25 @@ public class ConnectionController1 : MonoBehaviour, IConnectionStatusProvider
         }
     }
 
-    GameObject CheckConnector()
+    void SwitchControllers(bool @switch)
     {
-        RaycastHit hit;
-        Ray mouseScreenRay = m_camera.ScreenPointToRay(Input.mousePosition);
-        bool isHit = Physics.Raycast(mouseScreenRay, out hit, Mathf.Infinity, connectors);
-        return isHit ? hit.transform.gameObject : null;
+        foreach (AbstractConnectionController controller in m_controllers)
+        {
+            if (controller == this)
+                continue;
+            controller.enabled = @switch;
+        }
     }
 
-    void StartConnection(GameObject obj)
+    protected override void StartConnection(GameObject obj)
     {
-        status = Status.connection;
-        onStartConnection?.Invoke(obj);
+        SwitchControllers(false);
+        base.StartConnection(obj);
     }
 
-    void CompleteConnection(GameObject obj)
+    protected override void CompleteConnection(GameObject obj)
     {
-        status = Status.standby;
-        onCompleteConnection?.Invoke(obj);
+        SwitchControllers(true);
+        base.CompleteConnection(obj);
     }
 }
