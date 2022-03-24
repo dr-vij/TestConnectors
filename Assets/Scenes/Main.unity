@@ -323,6 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4dffdd418c5dc541ab4d328da73b98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectableOrigin: {fileID: 7355775886437882563, guid: 34741b90a6f20bd43b73f889865c454c,
+    type: 3}
   Radius: 10
 --- !u!4 &1288515605
 Transform:
