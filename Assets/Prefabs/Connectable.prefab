@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draggingSurface:
     serializedVersion: 2
-    m_Bits: 2
+    m_Bits: 4
 --- !u!1 &7224230683840592854
 GameObject:
   m_ObjectHideFlags: 0
