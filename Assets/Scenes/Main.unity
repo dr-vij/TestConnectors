@@ -350,6 +350,7 @@ GameObject:
   - component: {fileID: 1288515605}
   - component: {fileID: 1288515604}
   - component: {fileID: 1288515606}
+  - component: {fileID: 1288515607}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -393,9 +394,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288515603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 690b1dccfc13246bbb7104bd43603cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectors:
+    serializedVersion: 2
+    m_Bits: 256
+  status: 0
+--- !u!114 &1288515607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288515603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dab721ab03284ab186cc4585ed98ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   connectors:
