@@ -21,7 +21,7 @@ public class Main : MonoBehaviour
         for (int i = 0; i < OBJECTS_COUNT; i++)
         {
             Vector3 spotPosition = Quaternion.AngleAxis(360f * Random.value, Vector3.up) * Vector3.forward * Random.value * Radius;
-            Instantiate(connectableOrigin, spotPosition, Quaternion.identity, m_transform);
+            Instantiate(connectableOrigin, m_transform.InverseTransformPoint(spotPosition), Quaternion.identity, m_transform);
         }
     }
 }
