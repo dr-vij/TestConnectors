@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorDriver : MonoBehaviour
+public class ColorDriver : AbstractConnectionStatusHandler
 {
     public Color selected = Color.yellow;
     public Color connectable = Color.blue;
@@ -13,39 +13,40 @@ public class ColorDriver : MonoBehaviour
 
     IConnectionStatusProvider[] m_providers;
 
-    private void Awake()
+    bool m_readyToBeConnected;
+
+    protected override void Awake()
     {
         m_renderer = GetComponent<MeshRenderer>();
         m_default = m_renderer.material.color;
+        base.Awake();
     }
 
-    private void Start()
+    protected override void OnStartConnection(GameObject obj)
     {
-        m_providers = GetComponentsInParent<IConnectionStatusProvider>();
-
-        foreach (IConnectionStatusProvider provider in m_providers)
-        {
-            provider.onStartConnection += OnStartConnection;
-            provider.onCompleteConnection += OnCompleteConnection;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        foreach (IConnectionStatusProvider provider in m_providers)
-        {
-            provider.onStartConnection += OnStartConnection;
-            provider.onCompleteConnection += OnCompleteConnection;
-        }
-    }
-
-    private void OnStartConnection(GameObject obj)
-    {
+        m_readyToBeConnected = gameObject != obj;
         m_renderer.material.color = gameObject == obj ? selected : connectable;
     }
 
-    private void OnCompleteConnection(GameObject obj)
+    protected override void OnCompleteConnection(GameObject obj)
     {
+        m_readyToBeConnected = false;
         m_renderer.material.color = m_default;
+    }
+
+    private void OnMouseEnter()
+    {
+        if (!m_readyToBeConnected)
+            return;
+
+        m_renderer.material.color = selected;
+    }
+
+    private void OnMouseExit()
+    {
+        if (!m_readyToBeConnected)
+            return;
+
+        m_renderer.material.color = connectable;
     }
 }

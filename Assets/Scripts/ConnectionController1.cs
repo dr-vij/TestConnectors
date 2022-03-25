@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(1)]
 public class ConnectionController1 : AbstractConnectionController
 {
     AbstractConnectionController[] m_controllers;
 
     protected override void Awake()
     {
-        base.Awake();
         m_controllers = GetComponents<AbstractConnectionController>();
+        base.Awake();
     }
 
     protected override void Update()
@@ -29,16 +30,6 @@ public class ConnectionController1 : AbstractConnectionController
         }
     }
 
-    void SwitchControllers(bool @switch)
-    {
-        foreach (AbstractConnectionController controller in m_controllers)
-        {
-            if (controller == this)
-                continue;
-            controller.enabled = @switch;
-        }
-    }
-
     protected override void StartConnection(GameObject obj)
     {
         SwitchControllers(false);
@@ -49,5 +40,15 @@ public class ConnectionController1 : AbstractConnectionController
     {
         SwitchControllers(true);
         base.CompleteConnection(obj);
+    }
+
+    void SwitchControllers(bool @switch)
+    {
+        foreach (AbstractConnectionController controller in m_controllers)
+        {
+            if (controller == this)
+                continue;
+            controller.enabled = @switch;
+        }
     }
 }
