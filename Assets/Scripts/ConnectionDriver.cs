@@ -38,7 +38,7 @@ public class ConnectionDriver : AbstractConnectionStatusHandler
         if (obj == gameObject)
         {
             m_inEdit = enabled = m_line.enabled = true;
-            m_connected = null;
+            m_connected = controller.GetType().Equals(typeof(ConnectionController2)) ? null : m_transform;
         }
     }
 
