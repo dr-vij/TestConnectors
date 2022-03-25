@@ -24,7 +24,7 @@ public class ColorDriver : AbstractConnectionStatusHandler
 
     protected override void OnStartConnection(AbstractConnectionController controller, GameObject obj)
     {
-        m_changeColorMouseOver = gameObject != obj;
+        m_changeColorMouseOver = controller.GetType().Equals(typeof(ConnectionController2)) && gameObject != obj;
         m_renderer.material.color = gameObject == obj ? selected : connectable;
     }
 
