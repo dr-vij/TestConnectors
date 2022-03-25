@@ -5,6 +5,6 @@ using UnityEngine;
 
 public interface IConnectionStatusProvider
 {
-    event Action<GameObject> onStartConnection;
-    event Action<GameObject> onCompleteConnection;
+    event Action<AbstractConnectionController, GameObject> onStartConnection;
+    event Action<AbstractConnectionController, GameObject> onCompleteConnection;
 }

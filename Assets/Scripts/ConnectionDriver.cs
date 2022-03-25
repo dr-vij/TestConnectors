@@ -33,7 +33,7 @@ public class ConnectionDriver : AbstractConnectionStatusHandler
         m_connected = null;
     }
 
-    protected override void OnStartConnection(GameObject obj)
+    protected override void OnStartConnection(AbstractConnectionController controller, GameObject obj)
     {
         if (obj == gameObject)
         {
@@ -42,7 +42,7 @@ public class ConnectionDriver : AbstractConnectionStatusHandler
         }
     }
 
-    protected override void OnCompleteConnection(GameObject obj)
+    protected override void OnCompleteConnection(AbstractConnectionController controller, GameObject obj)
     {
         if (!m_inEdit)
             return;

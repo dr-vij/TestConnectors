@@ -14,8 +14,8 @@ public abstract class AbstractConnectionController : MonoBehaviour, IConnectionS
     public LayerMask connectors;
     public Status status;
 
-    public event Action<GameObject> onStartConnection;
-    public event Action<GameObject> onCompleteConnection;
+    public event Action<AbstractConnectionController, GameObject> onStartConnection;
+    public event Action<AbstractConnectionController, GameObject> onCompleteConnection;
 
     protected GameObject m_selected;
 
@@ -29,13 +29,13 @@ public abstract class AbstractConnectionController : MonoBehaviour, IConnectionS
     protected virtual void StartConnection(GameObject obj)
     {
         status = Status.connection;
-        onStartConnection?.Invoke(obj);
+        onStartConnection?.Invoke(this, obj);
     }
 
     protected virtual void CompleteConnection(GameObject obj)
     {
         status = Status.standby;
-        onCompleteConnection?.Invoke(obj);
+        onCompleteConnection?.Invoke(this, obj);
     }
 
     protected GameObject CheckConnector()

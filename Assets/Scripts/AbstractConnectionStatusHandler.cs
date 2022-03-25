@@ -27,6 +27,6 @@ public abstract class AbstractConnectionStatusHandler : MonoBehaviour
         }
     }
 
-    protected abstract void OnStartConnection(GameObject obj);
-    protected abstract void OnCompleteConnection(GameObject obj);
+    protected abstract void OnStartConnection(AbstractConnectionController controller, GameObject obj);
+    protected abstract void OnCompleteConnection(AbstractConnectionController controller, GameObject obj);
 }

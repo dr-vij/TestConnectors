@@ -13,7 +13,7 @@ public class ColorDriver : AbstractConnectionStatusHandler
 
     IConnectionStatusProvider[] m_providers;
 
-    bool m_readyToBeConnected;
+    bool m_changeColorMouseOver;
 
     protected override void Awake()
     {
@@ -22,21 +22,21 @@ public class ColorDriver : AbstractConnectionStatusHandler
         base.Awake();
     }
 
-    protected override void OnStartConnection(GameObject obj)
+    protected override void OnStartConnection(AbstractConnectionController controller, GameObject obj)
     {
-        m_readyToBeConnected = gameObject != obj;
+        m_changeColorMouseOver = gameObject != obj;
         m_renderer.material.color = gameObject == obj ? selected : connectable;
     }
 
-    protected override void OnCompleteConnection(GameObject obj)
+    protected override void OnCompleteConnection(AbstractConnectionController controller, GameObject obj)
     {
-        m_readyToBeConnected = false;
+        m_changeColorMouseOver = false;
         m_renderer.material.color = m_default;
     }
 
     private void OnMouseEnter()
     {
-        if (!m_readyToBeConnected)
+        if (!m_changeColorMouseOver)
             return;
 
         m_renderer.material.color = selected;
@@ -44,7 +44,7 @@ public class ColorDriver : AbstractConnectionStatusHandler
 
     private void OnMouseExit()
     {
-        if (!m_readyToBeConnected)
+        if (!m_changeColorMouseOver)
             return;
 
         m_renderer.material.color = connectable;
